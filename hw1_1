@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <errno.h>
+#include <unistd.h>
+
+int main()
+{
+	int n;
+	printf("Please input a number: ");
+	scanf("%d", &n);
+	pid_t son;
+	son=fork();
+	if(son==-1)
+	{
+		perror("Error when using fork\n");
+		return 1;
+	}
+	if(son==0)
+	{
+		int sum1=0;
+		for(int i=0; i<=n; i++)
+		{
+			if(i%2==1)
+			{
+				sum1+=i;
+			}
+		}
+		printf("This is the child process. Sum is: %d\n", sum1);
+		return 2;
+	}
+	int sum2=0;
+	for(int i=0; i<=n; i++)
+	{
+		if(i%2==0)
+		{
+			sum2+=i;
+		}
+	}
+	printf("This is the parent process. Sum is: %d\n", sum2);
+	return 0;
+}
